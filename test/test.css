@@ -72,6 +72,7 @@ body {
 }
 
 .test-webkit-sassui-timeline {
+  font-size: 10px;
   width: 80%;
   background: #eee;
   margin: 20px auto;
@@ -88,27 +89,31 @@ body {
   position: relative;
 }
 
+.test-webkit-sassui-timeline .item + .item {
+  padding-top: 1em;
+}
+
 .test-webkit-sassui-timeline .item:before {
   content: "";
   display: block;
   background: #009ff0;
-  width: 2px;
-  position: absolute;
+  width: 0.2em;
   top: 0;
   bottom: 0;
-  left: 6px;
+  left: 0.6em;
+  position: absolute;
   z-index: 0;
 }
 
 .test-webkit-sassui-timeline .item .left {
-  width: 10px;
-  height: 10px;
+  width: 1em;
+  height: 1em;
   background: #e9f8ff;
-  border: 2px solid #009ff0;
-  border-radius: 100px;
-  margin-right: 10px;
-  z-index: 2;
+  border: 0.2em solid #009ff0;
+  border-radius: 10em;
+  margin-right: 1em;
   position: relative;
+  z-index: 2;
 }
 
 .test-webkit-sassui-timeline .item .right {
