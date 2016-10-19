@@ -1,16 +1,20 @@
 /*webkit-sassui-timeline Start*/
 @import "../bower_components/webkit-sass-mixins/dist/webkit-sass-mixins.scss";
 @mixin webkit-sassui-timeline() {
-  //Your mixin code goes here.
+  font-size: 10px;
   .item {
     @include display-box;
     position: relative;
+
+    &+.item{
+      padding-top: 1em;
+    }
 
     &:before {
       content: "";
       display: block;
       background: #009ff0;
-      width: 2px;
+      width: 0.2em;
       position: absolute;
       top: 0;
       bottom: 0;
@@ -18,18 +22,12 @@
       z-index: 0;
     }
 
-    &:last-child{
-      &:before{
-        // display: none;
-      }
-    }
-
     .left {
-      @include size(10px);
+      @include size(1em);
       background: #e9f8ff;
-      border: 2px solid #009ff0;
-      border-radius: 100px;
-      margin-right: 10px;
+      border: 0.2em solid #009ff0;
+      border-radius: 10em;
+      margin-right: 1em;
       z-index: 2;
       position: relative;
     }
