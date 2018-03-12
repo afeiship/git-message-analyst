@@ -1,5 +1,5 @@
 /*webkit-sassui-timeline Start*/
-@import "../bower_components/webkit-sass-mixins/dist/webkit-sass-mixins.scss";
+@import "node_modules/webkit-sass-mixins/dist/webkit-sass-mixins.scss";
 @mixin webkit-sassui-timeline($inColor:#009ff0,$inBgColor:#e9f8ff) {
   font-size: 10px;
   .item {

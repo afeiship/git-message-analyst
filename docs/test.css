@@ -25,6 +25,8 @@
 /*flexbox End*/
 /*flip Start*/
 /*flip End*/
+/*grid Start*/
+/*grid End*/
 /*height Start*/
 /*height End*/
 /*margin Start*/
@@ -35,6 +37,8 @@
 /*placeholder End*/
 /*size Start*/
 /*size End*/
+/*square Start*/
+/*square End*/
 /*tap-highlight-transparent Start*/
 /*tap-highlight-transparent End*/
 /*text-size-adjust Start*/
@@ -77,7 +81,7 @@ body {
   background: #eee;
   margin: 20px auto;
   padding: 20px;
-  font-size: 13px;
+  font-size: 10px;
 }
 
 .test-webkit-sassui-timeline .item {

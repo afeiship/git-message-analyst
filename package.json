@@ -7,6 +7,10 @@
     "name": "afei",
     "email": "1290657123@qq.com"
   },
+  "scripts": {
+    "build": "gulp"
+  },
+  "main": "dist/webkit-sassui-timeline.scss",
   "license": "MIT",
   "devDependencies": {
     "del": "^2.2.1",
@@ -15,5 +19,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "yargs": "^4.7.1"
+  },
+  "dependencies": {
+    "webkit-sass-mixins": "github:afeiship/webkit-sass-mixins"
   }
 }
