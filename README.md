@@ -1,7 +1,9 @@
 # webkit-sassui-timeline
 > Webkit sass ui module for timeline.
 
-## usage:
+## demo:
++ https://afeiship.github.io/webkit-sassui-timeline
+
 
 ## resources:
 + https://github.com/afeiship/generator-webkit-sassui
