@@ -2,6 +2,7 @@
 
 import { Command, Option } from 'commander';
 import { createRequire } from 'module';
+import fs from 'fs';
 import { execSync } from 'child_process';
 import dayjs from 'dayjs';
 
@@ -11,7 +12,10 @@ const pkg = require('./package.json');
 const program = new Command();
 
 program.version(pkg.version);
-program.addOption(new Option('-v, --verbose', 'show verbose log')).parse(process.argv);
+program
+  .addOption(new Option('-v, --verbose', 'show verbose log'))
+  .addOption(new Option('-i, --init', 'init gmaConfig to package.json'))
+  .parse(process.argv);
 
 /**
  * @help: git-message-analyst -h
@@ -29,7 +33,29 @@ class CliApp {
     if (verbose) console.log('📗', ...args);
   }
 
+  init() {
+    // set gmaConfig to package.json
+    const gmaConfig = {
+      dateStart: '2021-01-01',
+      dateEnd: '2021-12-31',
+      startWith: 'feat',
+      saveAs: 'git-commit-analysis.md',
+    };
+    pkg.gmaConfig = gmaConfig;
+    fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), { encoding: 'utf-8' });
+  }
+
   run() {
+    if (!pkg.gmaConfig) {
+      console.log('Please run `gma init` first.');
+      return;
+    }
+
+    if (this.opts.init) {
+      this.init();
+      return;
+    }
+
     const { dateStart, dateEnd, startWith, saveAs } = pkg.gmaConfig;
 
     // 用数组维护命令的各个部分
