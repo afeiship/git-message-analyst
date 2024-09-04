@@ -1,12 +1,12 @@
 {
-  "name": "js-cli",
+  "name": "@jswork/git-message-analyst",
   "private": true,
   "version": "1.0.0",
-  "description": "TODO: CLI_DECRIPTION",
+  "description": "Git commit message analyse.",
   "type": "module",
   "files": ["bin"],
   "bin": {
-    "jsc": "./bin/index.js"
+    "git-message-analyst": "./bin/index.js"
   },
   "scripts": {
     "release": "release-it",
@@ -16,7 +16,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": ["npm run pretty"]
   },
-  "keywords": ["js-cli", "javascript", "templates"],
+  "keywords": ["git-message-analyst", "javascript", "templates"],
   "license": "MIT",
   "devDependencies": {
     "husky": "^9.0.6",

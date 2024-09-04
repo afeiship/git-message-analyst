@@ -16,8 +16,8 @@ program
   .parse(process.argv);
 
 /**
- * @help: jsc -h
- * @description: jsc -f
+ * @help: git-message-analyst -h
+ * @description: git-message-analyst -f
  */
 
 class CliApp {

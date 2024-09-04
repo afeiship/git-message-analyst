@@ -1,7 +1,7 @@
-# js-cli
-> js-cli-description
+# git-message-analyst
+> Git commit message analyse.
 
 ## create
 ```sh
-bun create cli/js-cli --no-git --no-install
+bun create cli/git-message-analyst --no-git --no-install
 ```

@@ -6,12 +6,8 @@ files:
   - '!rif.config.yaml'
 replacements:
   - from: /js-cli-description/g
-    to: Baalalaika CLI.
+    to: Git commit message analyse.
   - from: /js-cli/g
     to: '${PROJECT_NAME}'
   - from: /jsc/g
     to: '${PROJECT_NAME}'
-  - from: 'jswork'
-    to: 'jswork'
-  - from: __USAGE__
-    to: $(node bin/index.js -h)
