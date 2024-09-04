@@ -1,26 +1,29 @@
 {
-  "name": "webkit-sassui-timeline",
-  "version": "0.0.0",
-  "description": "Webkit sass ui module for timeline.",
-  "homepage": "https://github.com/afeiship/webkit-sassui-timeline",
-  "author": {
-    "name": "afei",
-    "email": "1290657123@qq.com"
+  "name": "js-cli",
+  "private": true,
+  "version": "1.0.0",
+  "description": "TODO: CLI_DECRIPTION",
+  "type": "module",
+  "files": ["bin"],
+  "bin": {
+    "jsc": "./bin/index.js"
   },
   "scripts": {
-    "build": "gulp"
+    "release": "release-it",
+    "prepare": "husky install",
+    "pretty": "prettier --write bin"
   },
-  "main": "dist/webkit-sassui-timeline.scss",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": ["npm run pretty"]
+  },
+  "keywords": ["js-cli", "javascript", "templates"],
   "license": "MIT",
   "devDependencies": {
-    "del": "^2.2.1",
-    "gulp": "^3.9.1",
-    "gulp-load-plugins": "^1.2.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.2",
-    "yargs": "^4.7.1"
+    "husky": "^9.0.6",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.4"
   },
   "dependencies": {
-    "webkit-sass-mixins": "github:afeiship/webkit-sass-mixins"
+    "commander": "^11.1.0"
   }
 }

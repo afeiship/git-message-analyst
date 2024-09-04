@@ -1,9 +1,7 @@
-# webkit-sassui-timeline
-> Webkit sass ui module for timeline.
+# js-cli
+> js-cli-description
 
-## demo:
-+ https://afeiship.github.io/webkit-sassui-timeline
-
-
-## resources:
-+ https://github.com/afeiship/generator-webkit-sassui
+## create
+```sh
+bun create cli/js-cli --no-git --no-install
+```
