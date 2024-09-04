@@ -6,7 +6,7 @@
   "type": "module",
   "files": ["bin"],
   "bin": {
-    "git-message-analyst": "./bin/index.js"
+    "gma": "./bin/index.js"
   },
   "scripts": {
     "release": "release-it",
