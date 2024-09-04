@@ -35,14 +35,17 @@ class CliApp {
 
   init() {
     // set gmaConfig to package.json
-    const gmaConfig = {
+    const gmaConfig = JSON.stringify({
       dateStart: '2021-01-01',
       dateEnd: '2021-12-31',
-      startWith: 'feat',
+      startWith: 'feat:',
       saveAs: 'git-commit-analysis.md',
-    };
-    pkg.gmaConfig = gmaConfig;
-    fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), { encoding: 'utf-8' });
+    });
+    //use npm pkg set gmaConfig to set gmaConfig to package.json
+
+    execSync(`npm pkg set  --json gmaConfig='${gmaConfig}'`, { encoding: 'utf-8' });
+    // execSync('npm pkg set gmaConfig=' + JSON.stringify(gmaConfig), { encoding: 'utf-8' });
+    // fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), { encoding: 'utf-8' });
   }
 
   run() {
