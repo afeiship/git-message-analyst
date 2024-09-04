@@ -41,11 +41,7 @@ class CliApp {
       startWith: 'feat:',
       saveAs: 'git-commit-analysis.md',
     });
-    //use npm pkg set gmaConfig to set gmaConfig to package.json
-
     execSync(`npm pkg set  --json gmaConfig='${gmaConfig}'`, { encoding: 'utf-8' });
-    // execSync('npm pkg set gmaConfig=' + JSON.stringify(gmaConfig), { encoding: 'utf-8' });
-    // fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2), { encoding: 'utf-8' });
   }
 
   run() {
