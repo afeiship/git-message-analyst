@@ -97,9 +97,7 @@ class CliApp {
       const savePath = `${process.cwd()}/${saveAs}` || this.opts.file;
       const content = contentArr.map((item) => item.md).join('\n');
       const currentDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
-      const metadata = ['---', 'title: Git Commit Analysis', `date: ${currentDate}`, '---'].join(
-        '\n'
-      );
+      const metadata = ['---', 'title: Git Commit Analysis', `date: ${currentDate}`, '---'].join('\n');
       const saveContent = `${metadata}\n\n${content}`;
       fs.writeFileSync(savePath, saveContent, { encoding: 'utf-8' });
     } else {
