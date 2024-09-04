@@ -43,9 +43,9 @@ class CliApp {
   init() {
     // set gmaConfig to package.json
     const gmaConfig = JSON.stringify({
-      dateStart: '2021-01-01',
-      dateEnd: '2021-12-31',
-      startWith: 'feat:',
+      dateStart: '2024-09-01',
+      dateEnd: dayjs().format('YYYY-MM-DD'),
+      startWith: 'notes:',
       saveAs: 'git-commit-analysis.md',
       branch: 'main',
     });
@@ -53,7 +53,7 @@ class CliApp {
   }
 
   run() {
-    if (!cwdPkg.gmaConfig) {
+    if (!cwdPkg.gmaConfig && !this.opts.init) {
       console.log('Please run `gma init` first.');
       return;
     }
@@ -85,16 +85,16 @@ class CliApp {
     const output = execSync(command, { encoding: 'utf-8' });
 
     this.log('output: ', output);
-    const formattedLogs = JSON.parse(output);
 
+    const formattedLogs = JSON.parse(output);
     const contentArr = formattedLogs.map((item, index) => {
       const msg = item.message;
       const content = msg.split(`${startWith}`)[1].trim();
       return { index: index + 1, content, md: `- ${item.author} (${item.date}): ${content}` };
     });
 
-    if (saveAs) {
-      const savePath = `${__dirname}/${saveAs}` || this.opts.file;
+    if (saveAs || this.opts.file) {
+      const savePath = `${process.cwd()}/${saveAs}` || this.opts.file;
       const content = contentArr.map((item) => item.md).join('\n');
       const saveContent = `---\ntitle: Git Commit Analysis\ndate: ${dayjs().format('YYYY-MM-DD HH:mm:ss')}\n---\n\n${content}`;
       fs.writeFileSync(savePath, saveContent, { encoding: 'utf-8' });
