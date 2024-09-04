@@ -2,6 +2,8 @@
 
 import { Command, Option } from 'commander';
 import { createRequire } from 'module';
+import { execSync } from 'child_process';
+import dayjs from 'dayjs';
 
 const __dirname = new URL('../', import.meta.url).pathname;
 const require = createRequire(__dirname);
@@ -9,11 +11,7 @@ const pkg = require('./package.json');
 const program = new Command();
 
 program.version(pkg.version);
-program
-  .addOption(new Option('-v, --verbose', 'show verbose log'))
-  .addOption(new Option('-f, --force', 'force to create'))
-  .addOption(new Option('-c, --city <string>', 'weather of city').choices(['wuhan', 'shanghai']))
-  .parse(process.argv);
+program.addOption(new Option('-v, --verbose', 'show verbose log')).parse(process.argv);
 
 /**
  * @help: git-message-analyst -h
@@ -32,7 +30,44 @@ class CliApp {
   }
 
   run() {
-    this.log('run cli: ', __dirname, this.args, this.opts, pkg.version);
+    const { dateStart, dateEnd, startWith, saveAs } = pkg.gmaConfig;
+
+    // 用数组维护命令的各个部分
+    const commandParts = [
+      'git log',
+      `--since="${dateStart}"`,
+      `--until="${dateEnd}"`,
+      '--pretty=format:\'{"author": "%an", "message": "%s", "date": "%ad"},\'',
+      "--date=format:'%Y-%m-%d %H:%M:%S'",
+      `| grep '^.*${startWith}'`,
+      "| sed '$ s/,$//'",
+      '| awk \'BEGIN {print "["} {print} END {print "]"}\'',
+    ];
+
+    // 将命令数组组合成字符串
+    const command = commandParts.join(' ');
+
+    // 执行命令并获取输出
+    const output = execSync(command, { encoding: 'utf-8' });
+
+    // 将输出解析为 JSON 对象数组
+    const formattedLogs = JSON.parse(output);
+
+    const contentArr = formattedLogs.map((item, index) => {
+      const msg = item.message;
+      const content = msg.split(`${startWith}`)[1].trim();
+      return { index: index + 1, content, md: `- ${item.author} (${item.date}): ${content}` };
+    });
+
+    // 保存到文件
+    if (saveAs) {
+      const savePath = `${__dirname}/${saveAs}`;
+      const content = contentArr.map((item) => item.md).join('\n');
+      const saveContent = `---\ntitle: Git Commit Analysis\ndate: ${dayjs().format('YYYY-MM-DD HH:mm:ss')}\n---\n\n${content}`;
+      require('fs').writeFileSync(savePath, saveContent, { encoding: 'utf-8' });
+    } else {
+      console.log(contentArr);
+    }
   }
 }
 
