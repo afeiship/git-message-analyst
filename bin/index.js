@@ -49,8 +49,6 @@ class CliApp {
   }
 
   run() {
-    console.log('run');
-
     if (!cwdPkg.gmaConfig) {
       console.log('Please run `gma init` first.');
       return;
