@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "description": "Git commit message analyse.",
   "type": "module",
-  "files": ["bin"],
+  "files": [
+    "bin"
+  ],
   "bin": {
     "gma": "./bin/index.js"
   },
@@ -14,9 +16,15 @@
     "pretty": "prettier --write bin"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": ["npm run pretty"]
+    "*.{js,jsx,ts,tsx}": [
+      "npm run pretty"
+    ]
   },
-  "keywords": ["git-message-analyst", "javascript", "templates"],
+  "keywords": [
+    "git-message-analyst",
+    "javascript",
+    "templates"
+  ],
   "license": "MIT",
   "devDependencies": {
     "husky": "^9.0.6",
@@ -25,5 +33,10 @@
   },
   "dependencies": {
     "commander": "^11.1.0"
+  },
+  "gmaConfig": {
+    "start": "2024-09-01",
+    "end": "2024-09-04",
+    "start_with": "notes:"
   }
 }
