@@ -16,6 +16,8 @@ program.version(pkg.version);
 program
   .addOption(new Option('-v, --verbose', 'show verbose log'))
   .addOption(new Option('-i, --init', 'init gmaConfig to package.json'))
+  .addOption(new Option('-b, --branch', 'branch name'))
+  .addOption(new Option('-f, --file', 'file name to save'))
   .parse(process.argv);
 
 /**
@@ -41,6 +43,7 @@ class CliApp {
       dateEnd: '2021-12-31',
       startWith: 'feat:',
       saveAs: 'git-commit-analysis.md',
+      branch: 'main',
     });
     execSync(`npm pkg set  --json gmaConfig='${gmaConfig}'`, { encoding: 'utf-8' });
   }
@@ -58,12 +61,13 @@ class CliApp {
       return;
     }
 
-    const { dateStart, dateEnd, startWith, saveAs } = pkg.gmaConfig;
+    const { dateStart, dateEnd, startWith, saveAs, branch } = pkg.gmaConfig;
     const endData = dateEnd || dayjs().format('YYYY-MM-DD');
 
     // 用数组维护命令的各个部分
     const commandParts = [
       'git log',
+      `${this.opts.branch || branch}`,
       `--since="${dateStart}"`,
       `--until="${endData}"`,
       '--pretty=format:\'{"author": "%an", "message": "%s", "date": "%ad"},\'',
@@ -87,7 +91,7 @@ class CliApp {
     });
 
     if (saveAs) {
-      const savePath = `${__dirname}/${saveAs}`;
+      const savePath = `${__dirname}/${saveAs}` || this.opts.file;
       const content = contentArr.map((item) => item.md).join('\n');
       const saveContent = `---\ntitle: Git Commit Analysis\ndate: ${dayjs().format('YYYY-MM-DD HH:mm:ss')}\n---\n\n${content}`;
       fs.writeFileSync(savePath, saveContent, { encoding: 'utf-8' });
