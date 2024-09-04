@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 const __dirname = new URL('../', import.meta.url).pathname;
 const require = createRequire(__dirname);
 const pkg = require('./package.json');
+const cwdPkg = require(`${process.cwd()}/package.json`);
 const program = new Command();
 
 program.version(pkg.version);
@@ -45,7 +46,9 @@ class CliApp {
   }
 
   run() {
-    if (!pkg.gmaConfig) {
+    console.log('run');
+
+    if (!cwdPkg.gmaConfig) {
       console.log('Please run `gma init` first.');
       return;
     }
@@ -56,12 +59,13 @@ class CliApp {
     }
 
     const { dateStart, dateEnd, startWith, saveAs } = pkg.gmaConfig;
+    const endData = dateEnd || dayjs().format('YYYY-MM-DD');
 
     // 用数组维护命令的各个部分
     const commandParts = [
       'git log',
       `--since="${dateStart}"`,
-      `--until="${dateEnd}"`,
+      `--until="${endData}"`,
       '--pretty=format:\'{"author": "%an", "message": "%s", "date": "%ad"},\'',
       "--date=format:'%Y-%m-%d %H:%M:%S'",
       `| grep '^.*${startWith}'`,
@@ -69,13 +73,11 @@ class CliApp {
       '| awk \'BEGIN {print "["} {print} END {print "]"}\'',
     ];
 
-    // 将命令数组组合成字符串
     const command = commandParts.join(' ');
-
-    // 执行命令并获取输出
+    this.log('cmd: ', command, '\n');
     const output = execSync(command, { encoding: 'utf-8' });
 
-    // 将输出解析为 JSON 对象数组
+    this.log('output: ', output);
     const formattedLogs = JSON.parse(output);
 
     const contentArr = formattedLogs.map((item, index) => {
@@ -84,12 +86,11 @@ class CliApp {
       return { index: index + 1, content, md: `- ${item.author} (${item.date}): ${content}` };
     });
 
-    // 保存到文件
     if (saveAs) {
       const savePath = `${__dirname}/${saveAs}`;
       const content = contentArr.map((item) => item.md).join('\n');
       const saveContent = `---\ntitle: Git Commit Analysis\ndate: ${dayjs().format('YYYY-MM-DD HH:mm:ss')}\n---\n\n${content}`;
-      require('fs').writeFileSync(savePath, saveContent, { encoding: 'utf-8' });
+      fs.writeFileSync(savePath, saveContent, { encoding: 'utf-8' });
     } else {
       console.log(contentArr);
     }

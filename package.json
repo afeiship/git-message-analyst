@@ -37,7 +37,6 @@
   },
   "gmaConfig": {
     "dateStart": "2024-09-01",
-    "dateEnd": "2024-09-04",
     "startWith": "feat:",
     "saveAs": "gma_output.md"
   }
