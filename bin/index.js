@@ -31,6 +31,10 @@ class CliApp {
     this.opts = program.opts();
   }
 
+  get currentBranch() {
+    return execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+  }
+
   log(...args) {
     const { verbose } = this.opts;
     if (verbose) console.log('📗', ...args);
@@ -61,11 +65,12 @@ class CliApp {
 
     const { dateStart, dateEnd, startWith, saveAs, branch } = pkg.gmaConfig;
     const endData = dateEnd || dayjs().format('YYYY-MM-DD');
+    const calcBranch = branch || this.opts.branch || this.currentBranch;
 
     // 用数组维护命令的各个部分
     const commandParts = [
       'git log',
-      `${this.opts.branch || branch}`,
+      `${calcBranch}`,
       `--since="${dateStart}"`,
       `--until="${endData}"`,
       '--pretty=format:\'{"author": "%an", "message": "%s", "date": "%ad"},\'',
